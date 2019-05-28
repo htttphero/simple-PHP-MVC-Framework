@@ -19,7 +19,9 @@ class Db
       $this->pdo->exec('SET NAMES UTF8');
   }
 
-  public function query(string $sql, array $params = [])
+
+//   Третьим аргументом в этот метод будет передаваться имя класса, объекты которого нужно создавать. По умолчанию это будут объекты класса stdClass – это такой встроенный класс в PHP, у которого нет никаких свойств и методов.
+  public function query(string $sql, array $params = [], string $className = 'stdClass')
     {
         $sth = $this->pdo->prepare($sql);
         $result = $sth->execute($params);
@@ -28,6 +30,6 @@ class Db
             return null;
         }
 
-        return $sth->fetchAll();
+        return $sth->fetchAll(\PDO::FETCH_CLASS, $className);
     }
 }
