@@ -15,11 +15,7 @@
     </tr>
     <tr>
         <td>
-        <?php foreach ($articles as $article): ?>
-                <h2><?= $article['name'] ?></h2>
-                <p><?= $article['text'] ?></p>
-                <hr>
-            <?php endforeach; ?>
+            Привет, <?php echo $name ?>!!!
         </td>
 
         <td width="300px" class="sidebar">
