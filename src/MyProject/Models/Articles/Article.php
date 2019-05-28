@@ -19,13 +19,19 @@ class Article extends ActiveRecordEntity
     protected $createdAt;
 
     
-    public function getAuthorId() 
+    public function __set($name, $value)
     {
-        return (int) $this->authorId;
+        $camelCaseName = $this->underscoreToCamelCase($name);
+        $this->$camelCaseName = $value;
     }
 
- 
- 
+  
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    
     public function getName(): string
     {
         return $this->name;
@@ -37,13 +43,8 @@ class Article extends ActiveRecordEntity
         return $this->text;
     }
 
-    protected static function getTableName(): string
+    private function underscoreToCamelCase(string $source): string
     {
-        return 'articles';
-    }
-
-    public function getAuthor(): User
-    {
-        return User::getById($this->authorId);
+        return lcfirst(str_replace('_', '', ucwords($source, '_')));
     }
 }

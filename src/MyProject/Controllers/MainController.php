@@ -22,7 +22,10 @@ class MainController
         // ];
  
         // $this->view->renderHtml('main/main.php', ['articles' => $articles]);
-        $articles = $this->db->query('SELECT * FROM `articles`;');
+        // $articles = $this->db->query('SELECT * FROM `articles`;');
+
+        ////// возвращает обьекс класса с помощью PDO
+        $articles = $this->db->query('SELECT * FROM `articles`;', [], Article::class);
         $this->view->renderHtml('main/main.php', ['articles' => $articles]);
     }
 
