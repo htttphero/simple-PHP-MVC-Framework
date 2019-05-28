@@ -27,7 +27,7 @@ class ArticlesController
         );
     
         if ($result === []) {
-            // Здесь обрабатываем ошибку
+            $this->view->renderHtml('errors/404.php',[], 404);
             return;
         }
     
