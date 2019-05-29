@@ -87,8 +87,36 @@ abstract class ActiveRecordEntity
     //  то выполняем update а иначе insert
     public function save() 
     {
-    $mappedProperties = $this->mapPropertiesToDbFormat();
-    var_dump($mappedProperties);
+        $mappedProperties = $this->mapPropertiesToDbFormat();
+        if ($this->id !== null) {
+            $this->update($mappedProperties);
+        } else {
+            $this->insert($mappedProperties);
+        }
     }
+    
+    //здесь мы обновляем существующую запись в базе
+    private function update(array $mappedProperties) 
+    {
+        $columns2params = [];
+        $params2values = [];
+        $index = 1;
+        foreach ($mappedProperties as $column => $value) {
+            $param = ':param' . $index; // :param1
+            $columns2params[] = $column . ' = ' . $param; // column1 = :param1
+            $params2values[':param' . $index] = $value; // [:param1 => value1]
+            $index++;
+        }
+        $sql = 'UPDATE ' . static::getTableName() . ' SET ' . implode(', ', $columns2params) . ' WHERE id = ' . $this->id;
+        $db = Db::getInstance();
+        $db->query($sql, $params2values, static::class);
+    }
+    
+    //здесь мы создаём новую запись в базе
+    private function insert(array $mappedProperties) 
+    {
+        
+    }
+
 
 }
