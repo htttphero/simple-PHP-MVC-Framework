@@ -2,7 +2,7 @@
 
 namespace MyProject\Controllers;
 
-use MyProject\Models\Users\User;
+
 use MyProject\Models\Articles\Article;
 use MyProject\View\View;
 
@@ -28,8 +28,11 @@ class ArticlesController
             $this->view->renderHtml('errors/404.php', [], 404);
             return;
         }
-        $articleAuthor = User::getById($article->getAuthorId());
-        // $this->view->renderHtml('articles/view.php', ['article' => $article]);
+        
+        
+        // $articleAuthor = User::getById($article->getAuthorId()); так как возвращаем автора полностью со статьи выше
+
+        // $this->view->renderHtml('articles/view.php', ['article' => $article]); так как теперь передаем еще автора
         $this->view->renderHtml('articles/view.php', [
             'article' => $article,
             'author' => $articleAuthor
