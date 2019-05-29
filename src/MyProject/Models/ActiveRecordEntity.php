@@ -45,4 +45,16 @@ abstract class ActiveRecordEntity
     abstract protected static function getTableName(): string;
 
 
+    // Этот метод вернёт либо один объект, если он найдётся в базе, либо null – что будет говорить об его отсутствии.
+    public static function getById(int $id) 
+    {
+        $db = new Db();
+        $entities = $db->query(
+            'SELECT * FROM `' . static::getTableName() . '` WHERE id=:id;',
+            [':id' => $id],
+            static::class
+        );
+        return $entities ? $entities[0] : null;
+    }
+
 }
