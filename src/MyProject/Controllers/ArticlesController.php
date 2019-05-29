@@ -72,4 +72,14 @@ class ArticlesController
         echo "</pre>";
     }
 
+    public function delete(int $articleId)
+    {
+        $article = Article::getById($articleId);
+        if ($article === null) {
+            $this->view->renderHtml('errors/404.php', [], 404);
+            return;
+        }
+        $article->delete();
+    }
+
 }

@@ -1,5 +1,6 @@
 <?php
 return [
+    '~^articles/(\d+)/delete$~' => [\MyProject\Controllers\ArticlesController::class, 'delete'],
     '~^articles/add$~' => [\MyProject\Controllers\ArticlesController::class, 'add'],
     '~^articles/(\d+)/edit$~' => [\MyProject\Controllers\ArticlesController::class, 'edit'],
     '~^articles/(\d+)$~' => [\MyProject\Controllers\ArticlesController::class, 'view'],
