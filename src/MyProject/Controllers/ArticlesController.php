@@ -35,10 +35,24 @@ class ArticlesController
         // $this->view->renderHtml('articles/view.php', ['article' => $article]); так как теперь передаем еще автора
         $this->view->renderHtml('articles/view.php', [
             'article' => $article,
-            'author' => $articleAuthor
+        
         ]);
     }
 
-    
+    public function edit(int $articleId)
+    {
+        $article = Article::getById($articleId);
+
+        if ($article === null) {
+            $this->view->renderHtml('errors/404.php', [], 404);
+            return;
+        }
+        $article->setName('Новое название статьи');
+        $article->setText('Новый текст статьи');
+
+        $article->save();
+
+        var_dump($article);
+    }
 
 }

@@ -57,4 +57,38 @@ abstract class ActiveRecordEntity
         return $entities ? $entities[0] : null;
     }
 
+    // метод, который будет преобразовывать строки типа authorId в author_id. чтоб соответствовать структуре базы данных
+    private function camelCaseToUnderscore(string $source): string
+    {
+    return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $source));
+    }
+
+    // метод, который прочитает все свойства объекта и создаст асоциативный массив вида  
+    // [
+    //     'название_свойства1' => значение свойства1,
+    //     'название_свойства2' => значение свойства2
+    // ]
+    private function mapPropertiesToDbFormat(): array
+    {
+    $reflector = new \ReflectionObject($this);
+    $properties = $reflector->getProperties();
+
+    $mappedProperties = [];
+    foreach ($properties as $property) {
+        $propertyName = $property->getName();
+        $propertyNameAsUnderscore = $this->camelCaseToUnderscore($propertyName);
+        $mappedProperties[$propertyNameAsUnderscore] = $this->$propertyName;
+    }
+
+    return $mappedProperties;
+    }
+
+    //  метод save() может быть вызван как у объекта, который уже есть в базе данных, так и у нового (если мы создали его с помощью new Article и заполнили ему свойства). Для первого нам нужно будет выполнить UPDATE-запрос, а для второго - INSERT-запрос. Если  у объекта, которому соответствует запись в базе, свойство id не равно null
+    //  то выполняем update а иначе insert
+    public function save() 
+    {
+    $mappedProperties = $this->mapPropertiesToDbFormat();
+    var_dump($mappedProperties);
+    }
+
 }

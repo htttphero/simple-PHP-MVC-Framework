@@ -41,6 +41,16 @@ class Article  extends ActiveRecordEntity
         return (int) $this->authorId;
     }
 
+    public function setName($name): string
+    {
+        return $this->name = $name;
+    }
+
+    public function setText($text): string
+    {
+        return $this->text = $text;
+    }
+
     //возвращаем с модели Артикл полностью модель юзера по ID; 
     public function getAuthor(): User
     {
