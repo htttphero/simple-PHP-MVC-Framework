@@ -37,7 +37,7 @@ abstract class ActiveRecordEntity
     //так же заменим второй параметр на полчение табилицы с помощью позжнего связывания.
     public static function findAll(): array
     {
-        $db = new Db();
+        $db = Db::getInstance();
         return $db->query('SELECT * FROM `' . static::getTableName() . '`;', [], static::class);
     }
     
@@ -48,7 +48,7 @@ abstract class ActiveRecordEntity
     // Этот метод вернёт либо один объект, если он найдётся в базе, либо null – что будет говорить об его отсутствии.
     public static function getById(int $id) 
     {
-        $db = new Db();
+        $db = Db::getInstance();
         $entities = $db->query(
             'SELECT * FROM `' . static::getTableName() . '` WHERE id=:id;',
             [':id' => $id],

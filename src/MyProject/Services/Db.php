@@ -7,7 +7,8 @@ class Db
   /** @var \PDO */
   private $pdo;
 
-  public function __construct()
+  private static $instance;
+  private  function __construct()
   {
       $dbOptions = (require __DIR__ . '/../../settings.php')['db'];
 
@@ -18,6 +19,15 @@ class Db
       );
       $this->pdo->exec('SET NAMES UTF8');
   }
+
+  public static function getInstance(): self 
+{
+    if (self::$instance === null) {
+        self::$instance = new self();
+    }
+
+    return self::$instance;
+}
 
 
 //   Третьим аргументом в этот метод будет передаваться имя класса, объекты которого нужно создавать. По умолчанию это будут объекты класса stdClass – это такой встроенный класс в PHP, у которого нет никаких свойств и методов.
