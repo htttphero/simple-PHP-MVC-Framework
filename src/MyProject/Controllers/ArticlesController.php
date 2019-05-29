@@ -2,6 +2,7 @@
 
 namespace MyProject\Controllers;
 
+use MyProject\Models\Users\User;
 use MyProject\Models\Articles\Article;
 use MyProject\View\View;
 
@@ -27,8 +28,14 @@ class ArticlesController
             $this->view->renderHtml('errors/404.php', [], 404);
             return;
         }
-
-        $this->view->renderHtml('articles/view.php', ['article' => $article]);
+        $articleAuthor = User::getById($article->getAuthorId());
+        // $this->view->renderHtml('articles/view.php', ['article' => $article]);
+        $this->view->renderHtml('articles/view.php', [
+            'article' => $article,
+            'author' => $articleAuthor
+        ]);
     }
+
+    
 
 }

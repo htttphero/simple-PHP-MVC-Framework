@@ -28,9 +28,9 @@ class User extends ActiveRecordEntity
     protected $createdAt;
 
    
-    public function getEmail(): string
+    public function getNickname(): string
     {
-        return $this->email;
+        return $this->nickname;
     }
 
     protected static function getTableName(): string
