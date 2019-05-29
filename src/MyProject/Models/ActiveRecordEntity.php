@@ -115,7 +115,28 @@ abstract class ActiveRecordEntity
     //здесь мы создаём новую запись в базе
     private function insert(array $mappedProperties) 
     {
-        
+        // отфильтруем элементы в массиве от тех, значение которых = NULL:
+        $filteredProperties = array_filter($mappedProperties);
+       
+        $columns = [];
+        $paramsNames = [];
+        $params2values = [];
+        foreach ($filteredProperties as $columnName => $value) {
+            $columns[] = '`' . $columnName. '`';
+            $paramName = ':' . $columnName;
+            $paramsNames[] = $paramName;
+            $params2values[$paramName] = $value;
+        }
+    
+        $columnsViaSemicolon = implode(', ', $columns);
+        $paramsNamesViaSemicolon = implode(', ', $paramsNames);
+    
+        $sql = 'INSERT INTO ' . static::getTableName() . ' (' . $columnsViaSemicolon . ') VALUES (' . $paramsNamesViaSemicolon . ');';
+    
+        $db = Db::getInstance();
+        $db->query($sql, $params2values, static::class);
+        $this->id = $db->getLastInsertId();
+        $this->createdAt = date("Y-m-d H:i:s");
     }
 
 

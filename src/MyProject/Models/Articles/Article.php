@@ -52,9 +52,14 @@ class Article  extends ActiveRecordEntity
     }
 
     //возвращаем с модели Артикл полностью модель юзера по ID; 
-    public function getAuthor(): User
+    public function getAuthor()
     {
         return User::getById($this->authorId);
+    }
+
+    public function setAuthor(User $author) 
+    {
+        $this->authorId = $author->getId();
     }
 
 }
