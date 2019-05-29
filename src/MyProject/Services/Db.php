@@ -2,6 +2,8 @@
 
 namespace MyProject\Services;
 
+
+
 class Db
 {
   /** @var \PDO */
@@ -11,13 +13,16 @@ class Db
   private  function __construct()
   {
       $dbOptions = (require __DIR__ . '/../../settings.php')['db'];
-
-      $this->pdo = new \PDO(
-          'mysql:host=' . $dbOptions['host'] . ';dbname=' . $dbOptions['dbname'],
-          $dbOptions['user'],
-          $dbOptions['password']
-      );
-      $this->pdo->exec('SET NAMES UTF8');
+      try {
+        $this->pdo = new \PDO(
+                'mysql:host=' . $dbOptions['host'] . ';dbname=' . $dbOptions['dbname'],
+                $dbOptions['user'],
+                $dbOptions['password']
+            );
+            $this->pdo->exec('SET NAMES UTF8');
+        } catch (\PDOException $e) {
+            throw new \MyProject\Exceptions\DbException('you failed this city: ' . $e->getMessage());
+        }
   }
 
   public static function getInstance(): self 
@@ -43,7 +48,7 @@ class Db
         return $sth->fetchAll(\PDO::FETCH_CLASS, $className);
     }
 
-    
+
     // чтобы получить id последней вставленной записи в базе
     public function getLastInsertId(): int
     {

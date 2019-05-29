@@ -27,8 +27,7 @@ class ArticlesController
         $article = Article::getById($articleId);
 
         if ($article === null) {
-            $this->view->renderHtml('errors/404.php', [], 404);
-            return;
+            throw new \MyProject\Exceptions\NotFoundException();
         }
         
         
@@ -46,8 +45,7 @@ class ArticlesController
         $article = Article::getById($articleId);
 
         if ($article === null) {
-            $this->view->renderHtml('errors/404.php', [], 404);
-            return;
+            throw new \MyProject\Exceptions\NotFoundException();
         }
         $article->setName('Новое название статьи');
         $article->setText('Новый текст статьи');
@@ -76,8 +74,8 @@ class ArticlesController
     {
         $article = Article::getById($articleId);
         if ($article === null) {
-            $this->view->renderHtml('errors/404.php', [], 404);
-            return;
+            throw new \MyProject\Exceptions\NotFoundException();
+       
         }
         $article->delete();
     }
