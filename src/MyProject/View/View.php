@@ -5,6 +5,7 @@ namespace MyProject\View;
 class View
 {
     private $templatesPath;
+    private $extraVars = [];
 
     public function __construct(string $templatesPath)
     {

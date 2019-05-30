@@ -41,5 +41,17 @@ class MainController extends AbstractController
         $this->view->renderHtml('main/hello.php', ['name' => $name]);
     }
 
+    public function eexit()
+    {
+ 
+        if (isset($_COOKIE['token'])) {
+            setcookie("token", "", time() - 100);
+        
+        }
+    header('Location: /');
+    }
+
+ 
+
   
 }
