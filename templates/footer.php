@@ -1,7 +1,7 @@
 </td>
 
 <td width="300px" class="sidebar">
-    <div class="sidebarHeader">Меню</div>
+    <div class="sidebarHeader">Навигация</div>
     <ul>
         <li><a href="/">Главная страница</a></li>
         <li><a href="/hello/serg">Обо мне</a></li>

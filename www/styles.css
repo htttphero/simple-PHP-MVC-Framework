@@ -28,9 +28,11 @@
     padding-left: 20px;
 }
 
+
+
 a,
 a:visited {
-    color: darkgreen;
+    color: rgb(36, 65, 194);
 }
 
 .footer {
