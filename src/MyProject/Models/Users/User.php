@@ -34,6 +34,12 @@ class User extends ActiveRecordEntity
         return $this->nickname;
     }
 
+       
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
     protected static function getTableName(): string
     {
         return 'users';
@@ -80,13 +86,19 @@ class User extends ActiveRecordEntity
         $user->passwordHash = password_hash($userData['password'], PASSWORD_DEFAULT);
         $user->isConfirmed = false;
         $user->role = 'user';
-        
+
         // authToken – это специально случайным образом сгенерированный параметр, с помощью которого пользователь будет авторизовываться. 
         $user->authToken = sha1(random_bytes(100)) . sha1(random_bytes(100));
         $user->save();
 
         return $user;
 
+    }
+
+    public function activate() 
+    {
+        $this->isConfirmed = true;
+        $this->save();
     }
  
 }

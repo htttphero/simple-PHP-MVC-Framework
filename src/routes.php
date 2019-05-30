@@ -6,5 +6,6 @@ return [
     '~^articles/(\d+)$~' => [\MyProject\Controllers\ArticlesController::class, 'view'],
     '~^hello/(.*)$~' => [\MyProject\Controllers\MainController::class, 'sayHello'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
-    '~^users/register$~' => [\MyProject\Controllers\UsersController::class, 'signUp']
+    '~^users/register$~' => [\MyProject\Controllers\UsersController::class, 'signUp'],
+    '~^users/(\d+)/activate/(.+)$~' => [\MyProject\Controllers\UsersController::class, 'activate']
 ];
