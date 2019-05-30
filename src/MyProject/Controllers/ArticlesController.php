@@ -51,12 +51,31 @@ class ArticlesController extends AbstractController
         if ($article === null) {
             throw new \MyProject\Exceptions\NotFoundException();
         }
-        $article->setName('Новое название статьи');
-        $article->setText('Новый текст статьи');
 
-        $article->save();
+        if ($this->user === null) {
+            throw new \MyProject\Exceptions\UnauthorizedException();
+        }
 
-        var_dump($article);
+        if (!empty($_POST)) {
+            try {
+                $article->updateFromArray($_POST);
+            } catch (InvalidArgumentException $e) {
+                $this->view->renderHtml('articles/edit.php', ['error' => $e->getMessage()]);
+                return;
+            }
+    
+            header('Location: /articles/' . $article->getId(), true, 302);
+            exit();
+        }
+    
+        $this->view->renderHtml('articles/edit.php', ['article' => $article]);
+
+        // $article->setName('Новое название статьи');
+        // $article->setText('Новый текст статьи');
+
+        // $article->save();
+
+        // var_dump($article);
     }
 
     public function add() 
@@ -76,7 +95,7 @@ class ArticlesController extends AbstractController
             header('Location: /articles/' . $article->getId(), true, 302);
             exit();
         }
-        
+
         $this->view->renderHtml('articles/add.php');
         return; 
         // $author = User::getById(1);
@@ -99,7 +118,11 @@ class ArticlesController extends AbstractController
             throw new \MyProject\Exceptions\NotFoundException();
        
         }
+        header('Location: /');
         $article->delete();
+
     }
+
+    
 
 }

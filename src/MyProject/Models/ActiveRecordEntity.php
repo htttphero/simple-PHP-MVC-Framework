@@ -139,7 +139,7 @@ abstract class ActiveRecordEntity
         $this->createdAt = date("Y-m-d H:i:s");
     }
 
-    public function delete(): void
+    public function delete()
     {
         $db = Db::getInstance();
         $db->query(
