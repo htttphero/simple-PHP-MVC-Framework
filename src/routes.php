@@ -7,5 +7,6 @@ return [
     '~^hello/(.*)$~' => [\MyProject\Controllers\MainController::class, 'sayHello'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
     '~^users/register$~' => [\MyProject\Controllers\UsersController::class, 'signUp'],
-    '~^users/(\d+)/activate/(.+)$~' => [\MyProject\Controllers\UsersController::class, 'activate']
+    '~^users/(\d+)/activate/(.+)$~' => [\MyProject\Controllers\UsersController::class, 'activate'],
+    '~^users/login~' => [\MyProject\Controllers\UsersController::class, 'login']
 ];

@@ -9,18 +9,20 @@ use MyProject\Models\Users\User;
 
 
 
-class ArticlesController
+class ArticlesController extends AbstractController
 {
 
-    private $view;
+     protected $view;
 
  
 
-    public function __construct()
-    {
-        $this->view = new View(__DIR__ . '/../../../templates');
+    // public function __construct()
+    // {
+    //     // $this->user = UsersAuthService::getUserByToken();
+    //     // $this->view = new View(__DIR__ . '/../../../templates');
+    //     // $this->view->setVar('user', $this->user);
      
-    }
+    // }
 
     public function view(int $articleId)
     {

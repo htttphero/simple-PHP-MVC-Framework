@@ -3,17 +3,17 @@ namespace MyProject\Controllers;
 
 use MyProject\Models\Articles\Article;
 use MyProject\View\View;
+use MyProject\Services\UsersAuthService;
 // use MyProject\Services\Db;
 
-class MainController
+class MainController extends AbstractController
 {
-    private $view;
+    //   protected  $view;
     private $db;
-    public function __construct()
-    {
-        $this->view = new View(__DIR__ . '/../../../templates');
-      
-    }
+    // public function __construct()
+    // {
+
+    // }
 
     public function main()
     {   //закоментировал так как начал использовать реальное соединение с базой данныз и получие данных из нее
@@ -28,7 +28,12 @@ class MainController
         ////// возвращает обьекс класса с помощью PDO
         // $articles = $this->db->query('SELECT * FROM `articles`;', [], Article::class);
         $articles = Article::findAll();
-        $this->view->renderHtml('main/main.php', ['articles' => $articles]);
+        $this->view->renderHtml('main/main.php', [
+            'articles' => $articles,
+           
+            // получаем из абстрактного контроллера
+            //  'user' => UsersAuthService::getUserByToken()
+            ]);
     }
 
     public function sayHello(string $name)
