@@ -15,7 +15,7 @@
     </tr>
     <tr>
         <td colspan="2" style="text-align: right">
-            <?= !empty($user) ? 'Привет, ' . $user->getNickname() : 'Войдите на сайт' ?>
+            <?= !empty($user) ? 'Привет, ' . $user->getNickname() .' |'.'<a href="#"> Выйти<a>'  : 'Войдите на сайт' ?>
         </td>
     </tr>
     <tr>

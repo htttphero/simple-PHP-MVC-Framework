@@ -6,6 +6,8 @@ namespace MyProject\Controllers;
 use MyProject\Models\Articles\Article;
 use MyProject\View\View;
 use MyProject\Models\Users\User;
+use MyProject\Exceptions\UnauthorizedException;
+use MyProject\Exceptions\InvalidArgumentException;
 
 
 
@@ -59,17 +61,35 @@ class ArticlesController extends AbstractController
 
     public function add() 
     {
-        $author = User::getById(1);
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
+    
+        if (!empty($_POST)) {
+            try {
+                $article = Article::createFromArray($_POST, $this->user);
+            } catch (InvalidArgumentException $e) {
+                $this->view->renderHtml('articles/add.php', ['error' => $e->getMessage()]);
+                return;
+            }
+    
+            header('Location: /articles/' . $article->getId(), true, 302);
+            exit();
+        }
+        
+        $this->view->renderHtml('articles/add.php');
+        return; 
+        // $author = User::getById(1);
 
-        $article = new Article();
-        $article->setAuthor($author);
-        $article->setName('Новое название статьи2');
-        $article->setText('Новый текст статьи2');
+        // $article = new Article();
+        // $article->setAuthor($author);
+        // $article->setName('Новое название статьи2');
+        // $article->setText('Новый текст статьи2');
 
-        $article->save();
-        echo "<pre>";
-        var_dump($article);
-        echo "</pre>";
+        // $article->save();
+        // echo "<pre>";
+        // var_dump($article);
+        // echo "</pre>";
     }
 
     public function delete(int $articleId)
