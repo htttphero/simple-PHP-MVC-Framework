@@ -150,5 +150,20 @@ abstract class ActiveRecordEntity
          
     }
 
+    // проверка, что пользователя с такими email и nickname нет в базе
+    public static function findOneByColumn(string $columnName, $value)
+    {
+        $db = Db::getInstance();
+        $result = $db->query(
+            'SELECT * FROM `' . static::getTableName() . '` WHERE `' . $columnName . '` = :value LIMIT 1;',
+            [':value' => $value],
+            static::class
+        );
+        if ($result === []) {
+            return null;
+        }
+        return $result[0];
+    }
+
 
 }
